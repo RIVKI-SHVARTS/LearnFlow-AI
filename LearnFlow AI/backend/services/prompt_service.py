@@ -33,6 +33,18 @@ def generate_and_save_lesson(
         category_id=category_id,
         sub_category_id=sub_category_id
     )
-
-def get_all_user_prompts(user_id: str) -> List[Dict[str, Any]]:
+def get_all_prompts() -> List[Dict[str, Any]]:
     return prompt_repository.get_all_prompts()
+
+def get_prompt(prompt_id: str) -> Dict[str, Any]:
+    prompt = prompt_repository.get_prompt_by_id(prompt_id)
+    if not prompt:
+        raise ValueError(f"Prompt {prompt_id} not found")
+    return prompt
+
+def update_prompt_content(prompt_id: str, updates: Dict[str, Any]) -> bool:
+    # כאן אפשר להוסיף ולידציות על השדות שמעדכנים
+    return prompt_repository.update_prompt(prompt_id, updates)
+
+def delete_prompt(prompt_id: str) -> bool:
+    return prompt_repository.delete_prompt(prompt_id)
