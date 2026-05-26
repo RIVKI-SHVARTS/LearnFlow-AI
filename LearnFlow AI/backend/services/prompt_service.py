@@ -43,7 +43,6 @@ def get_prompt(prompt_id: str) -> Dict[str, Any]:
     return prompt
 
 def update_prompt_content(prompt_id: str, updates: Dict[str, Any]) -> bool:
-    # כאן אפשר להוסיף ולידציות על השדות שמעדכנים
     return prompt_repository.update_prompt(prompt_id, updates)
 
 def delete_prompt(prompt_id: str) -> bool:
