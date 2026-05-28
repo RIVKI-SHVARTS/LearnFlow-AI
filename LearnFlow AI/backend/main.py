@@ -6,7 +6,8 @@ from routes.sub_category_routes import sub_cat_bp
 from routes.prompt_routes import prompt_bp
 
 app = Flask(__name__)
-CORS(app) 
+# CORS(app) 
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.register_blueprint(user_bp, url_prefix='/users')
 app.register_blueprint(category_bp, url_prefix='/categories')

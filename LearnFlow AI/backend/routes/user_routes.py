@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services import user_service
+from repositories.user_repository import get_user_by_phone # שם הפונקציה עשוי להשתנות בהתאם למה שכתבת שם
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -15,14 +16,18 @@ def get_user(user_id):
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
 
-@user_bp.route('/', methods=['POST'])
+@user_bp.route('', methods=['POST'], strict_slashes=False)
 def create_user():
     data = request.get_json()
+    existing_user = get_user_by_phone(data['phone'])
+    if existing_user:
+        return jsonify({"message": "User with this phone number already exists."}), 409
+        
     try:
         user = user_service.register_user(data['name'], data['phone'])
-        return jsonify(user), 201
+        return jsonify(user), 201 
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+            return jsonify({"error": str(e)}), 400
 
 @user_bp.route('/<user_id>', methods=['PATCH'])
 def update_user(user_id):
