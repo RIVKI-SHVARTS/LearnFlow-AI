@@ -9,6 +9,7 @@ app = Flask(__name__)
 # CORS(app) 
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+# רישום כל ה-Blueprints שבנינו
 app.register_blueprint(user_bp, url_prefix='/users')
 app.register_blueprint(category_bp, url_prefix='/categories')
 app.register_blueprint(sub_cat_bp, url_prefix='/sub-categories')
@@ -19,4 +20,5 @@ def home():
     return {"message": "LearnFlow AI Backend is running!"}
 
 if __name__ == '__main__':
+    # הרצת השרת במצב Debug כדי שתוכלי לראות שגיאות
     app.run(debug=True, port=5000)
