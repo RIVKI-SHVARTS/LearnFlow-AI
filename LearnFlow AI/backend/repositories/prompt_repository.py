@@ -15,6 +15,11 @@ def get_prompt_by_id(prompt_id: str) -> Optional[Dict[str, Any]]:
         return prompt_from_dict(doc)
     return None
 
+def get_prompt_history(user_id: str) -> List[Dict[str, Any]]:
+    cursor = db[COLLECTION_NAME].find({"user_id": user_id})
+    
+    return [prompt_from_dict(doc) for doc in cursor]
+
 
 def create_new_prompt(
     prompt: str,

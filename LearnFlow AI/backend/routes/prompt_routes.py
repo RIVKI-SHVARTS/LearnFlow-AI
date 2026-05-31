@@ -32,6 +32,15 @@ def get_one(prompt_id):
         return jsonify(prompt_service.get_prompt(prompt_id)), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
+    
+@prompt_bp.route('/history/<user_id>', methods=['GET'])
+def get_history(user_id):
+    try:
+        return jsonify(prompt_service.get_prompt_history(user_id)), 200
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 404
 
 
 @prompt_bp.route('/<prompt_id>', methods=['DELETE'])

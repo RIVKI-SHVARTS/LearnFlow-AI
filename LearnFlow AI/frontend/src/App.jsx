@@ -3,6 +3,7 @@ import './App.css';
 import RegisterForm from './pages/RegistrationForm';
 import CategorySelector from './pages/CategorySelector';
 import LessonDisplay from './pages/LessonDisplay';  
+import HistoryPage from './pages/HistoryPage';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
           
           {/* דף הצגת השיעור שנפתח אחרי יצירה */}
           <Route path="/lesson" element={<LessonDisplay />} />
+
+          <Route path="/history" element={<HistoryPage />} />
           
           {/* אפשר להוסיף כאן עוד דפים בעתיד */}
           {/* <Route path="/register" element={<RegisterForm />} /> */}

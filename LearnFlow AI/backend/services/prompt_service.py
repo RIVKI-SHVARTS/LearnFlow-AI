@@ -42,6 +42,11 @@ def get_prompt(prompt_id: str) -> Dict[str, Any]:
         raise ValueError(f"Prompt {prompt_id} not found")
     return prompt
 
+
+
+def get_prompt_history(user_id: str) -> List[Dict[str, Any]]:
+    return prompt_repository.get_prompt_history(user_id)
+
 def update_prompt_content(prompt_id: str, updates: Dict[str, Any]) -> bool:
     return prompt_repository.update_prompt(prompt_id, updates)
 
