@@ -57,7 +57,8 @@ import HistoryPage from './pages/HistoryPage';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
-
+import AdminPage from './pages/AdminPage';
+import UserHistoryPage from './pages/UserHistoryPage';
 // קומפוננטה פנימית שמשתמשת ב-useLocation
 function AppContent() {
   const location = useLocation();
@@ -67,6 +68,7 @@ function AppContent() {
   return (
     <div className="App">
       {showNavbar && <Navbar />}
+      
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/category" element={<CategorySelector />} />
@@ -74,6 +76,8 @@ function AppContent() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/user-history/:userId" element={<UserHistoryPage />} />
       </Routes>
     </div>
   );
