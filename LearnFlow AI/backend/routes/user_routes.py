@@ -15,6 +15,13 @@ def get_user(user_id):
         return jsonify(user), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
+    
+@user_bp.route('/phone/<phone>', methods=['GET'])
+def get_user_by_phone_route(phone):
+    user = user_service.get_user_by_phone(phone)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify(user), 200    
 
 @user_bp.route('', methods=['POST'], strict_slashes=False)
 def create_user():
