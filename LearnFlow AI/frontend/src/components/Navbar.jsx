@@ -34,12 +34,18 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const [isAdmin, setIsAdmin] = useState(false);
     
-    // שליפת שם המשתמש מה-sessionStorage (אם קיים)
     const userName = sessionStorage.getItem('user_name');
+
+    useEffect(() => {
+        const adminStatus = JSON.parse(sessionStorage.getItem('is_admin'));
+        setIsAdmin(adminStatus === true);
+    }, []);
 
     const handleLogout = () => {
         // ניקוי מלא של כל הנתונים לפני היציאה למניעת באגים
@@ -64,6 +70,12 @@ const Navbar = () => {
             <div className="nav-links">
                 <Link to="/dashboard" style={styles.link}>Dashboard</Link>
                 <Link to="/history" style={styles.link}>History</Link>
+
+                {isAdmin && (
+                    <Link to="/admin" style={{...styles.link, fontWeight: 'bold'}}>
+                        Admin Panel
+                    </Link>
+                )}
                 <button onClick={handleLogout} style={styles.button}>Logout</button>
             </div>
         </nav>

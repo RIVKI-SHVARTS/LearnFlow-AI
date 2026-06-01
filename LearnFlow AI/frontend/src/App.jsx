@@ -57,8 +57,8 @@ import HistoryPage from './pages/HistoryPage';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
-import AdminPage from './pages/AdminPage';
 import UserHistoryPage from './pages/UserHistoryPage';
+import AdminPage from './pages/AdminPage';
 // קומפוננטה פנימית שמשתמשת ב-useLocation
 function AppContent() {
   const location = useLocation();
