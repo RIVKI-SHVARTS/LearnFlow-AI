@@ -41,7 +41,9 @@ const LoginPage = () => {
                 return;
             }
 
-            sessionStorage.setItem('user_id', user._id);
+            sessionStorage.setItem('user_id', res.data.id);
+            sessionStorage.setItem('user_name', res.data.name); 
+            sessionStorage.setItem('is_admin', res.data.is_admin);
             navigate('/dashboard');
 
         } catch (err) {

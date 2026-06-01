@@ -31,7 +31,7 @@ def create_user():
         return jsonify({"message": "User with this phone number already exists."}), 409
         
     try:
-        user = user_service.register_user(data['name'], data['phone'])
+        user = user_service.register_user(data['name'], data['phone'], is_admin=False)
         return jsonify(user), 201 
     except ValueError as e:
             return jsonify({"error": str(e)}), 400

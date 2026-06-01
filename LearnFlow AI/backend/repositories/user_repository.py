@@ -21,15 +21,17 @@ def get_user_by_phone(phone: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-def create_user(name: str, phone: str) -> Dict[str, Any]:
+def create_user(name: str, phone: str, is_admin: bool = False) -> Dict[str, Any]:
     result = db[COLLECTION_NAME].insert_one({
         "name": name,
-        "phone": phone
+        "phone": phone,
+        "is_admin": is_admin
     })
     return user_from_dict({
         "_id": result.inserted_id,
         "name": name,
-        "phone": phone
+        "phone": phone,
+        "is_admin": False
     })
 
 def update_user(user_id: str, name: str = None, phone: str = None) -> bool:

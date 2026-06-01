@@ -8,7 +8,7 @@ const LessonDisplay = () => {
     return (
       <div style={{ padding: '20px' }}>
         <p>No lesson found. Please go back to the home page to generate one.</p>
-        <button onClick={() => window.location.href = '/'}>Go Home</button>
+        <button onClick={() => window.location.href = '/dashboard'}>Go Home</button>
       </div>
     );
   }
@@ -19,7 +19,7 @@ const LessonDisplay = () => {
       <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
         {lesson}
       </div>
-      <button onClick={() => window.location.href = '/'}>Back</button>
+      <button onClick={() => window.location.href = '/dashboard'}>Back</button>
     </div>
   );
 };

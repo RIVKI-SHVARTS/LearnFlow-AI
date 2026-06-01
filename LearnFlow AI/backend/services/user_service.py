@@ -13,14 +13,14 @@ def get_user(user_id: str) -> Dict[str, Any]:
 def get_user_by_phone(phone: str) -> Optional[Dict[str, Any]]:
     return user_repo.get_user_by_phone(phone)
 
-def register_user(name: str, phone: str) -> Dict[str, Any]:
+def register_user(name: str, phone: str, is_admin: bool = False) -> Dict[str, Any]:
     if user_repo.get_user_by_phone(phone):
         raise ValueError("User with this phone number already exists")
     
     if not name or len(name.strip()) < 2:
         raise ValueError("Name must be at least 2 characters long")
         
-    return user_repo.create_user(name, phone)
+    return user_repo.create_user(name, phone, is_admin)
 
 def update_user_profile(user_id: str, name: Optional[str] = None, phone: Optional[str] = None) -> bool:
     return user_repo.update_user(user_id, name, phone)
