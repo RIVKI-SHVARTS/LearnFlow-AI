@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services import category_service
+from utils.jwt_auth import admin_required
 
 category_bp = Blueprint('category_bp', __name__)
 
@@ -15,6 +16,7 @@ def get_one(category_id):
         return jsonify({"error": str(e)}), 404
 
 @category_bp.route('/', methods=['POST'])
+@admin_required
 def create():
     data = request.get_json()
     try:
@@ -24,6 +26,7 @@ def create():
         return jsonify({"error": str(e)}), 400
 
 @category_bp.route('/<category_id>', methods=['PATCH'])
+@admin_required
 def update(category_id):
     data = request.get_json()
     try:
@@ -35,6 +38,7 @@ def update(category_id):
         return jsonify({"error": str(e)}), 400
 
 @category_bp.route('/<category_id>', methods=['DELETE'])
+@admin_required
 def delete(category_id):
     success = category_service.remove_category(category_id)
     if not success:

@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from services import sub_category_service
+from utils.jwt_auth import admin_required
 
 sub_cat_bp = Blueprint('sub_cat_bp', __name__)
 
@@ -18,6 +19,7 @@ def get_one(sub_cat_id):
         return jsonify({"error": str(e)}), 404
 
 @sub_cat_bp.route('/', methods=['POST'])
+@admin_required
 def create():
     data = request.get_json()
     try:
@@ -30,6 +32,7 @@ def create():
         return jsonify({"error": str(e)}), 400
 
 @sub_cat_bp.route('/<sub_cat_id>', methods=['PATCH'])
+@admin_required
 def update(sub_cat_id):
     data = request.get_json()
     success = sub_category_service.update_sub_category(
@@ -42,6 +45,7 @@ def update(sub_cat_id):
     return jsonify({"message": "Sub-category updated"}), 200
 
 @sub_cat_bp.route('/<sub_cat_id>', methods=['DELETE'])
+@admin_required
 def delete(sub_cat_id):
     success = sub_category_service.remove_sub_category(sub_cat_id)
     if not success:

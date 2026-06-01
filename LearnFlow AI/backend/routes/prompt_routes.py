@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify
 from services import prompt_service
+from utils.jwt_auth import auth_required
 
 prompt_bp = Blueprint('prompt_bp', __name__)
 
 # יצירת שיעור חדש ע"י AI
 @prompt_bp.route('/generate', methods=['POST'])
+@auth_required
 def generate_lesson():
     data = request.get_json()
     try:
@@ -34,11 +36,10 @@ def get_one(prompt_id):
         return jsonify({"error": str(e)}), 404
     
 @prompt_bp.route('/history/<user_id>', methods=['GET'])
+@auth_required
 def get_history(user_id):
     try:
         return jsonify(prompt_service.get_prompt_history(user_id)), 200
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 404
     except ValueError as e:
         return jsonify({"error": str(e)}), 404
 

@@ -14,12 +14,16 @@ const AdminPage = () => {
     const [subCatName, setSubCatName] = useState('');
 
     useEffect(() => {
-        const isAdmin = JSON.parse(sessionStorage.getItem('is_admin'));
-        if (!isAdmin) {
-            navigate('/dashboard');
-            return;
-        }
-        fetchData();
+        const verifyAdmin = async () => {
+            try {
+                await api.get('/users/admin');
+                fetchData();
+            } catch (err) {
+                navigate('/dashboard');
+            }
+        };
+
+        verifyAdmin();
     }, [navigate]);
 
     const fetchData = async () => {

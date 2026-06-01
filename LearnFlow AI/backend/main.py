@@ -6,9 +6,10 @@ from routes.sub_category_routes import sub_cat_bp
 from routes.prompt_routes import prompt_bp
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 # CORS(app) 
-CORS(app, resources={r"/*": {"origins": "*"}})
-
+# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 # רישום כל ה-Blueprints שבנינו
 app.register_blueprint(user_bp, url_prefix='/users')
 app.register_blueprint(category_bp, url_prefix='/categories')

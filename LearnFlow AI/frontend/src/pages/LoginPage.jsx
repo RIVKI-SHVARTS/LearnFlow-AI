@@ -28,26 +28,17 @@ const LoginPage = () => {
         }
 
         try {
-            const res = await api.get(`/users/phone/${phone}`);
+            const res = await api.post('/users/login', { phone, name });
             const user = res.data;
 
-            if (!user) {
-                showFeedback("This phone number does not exist in the system.", 'error');
-                return;
-            }
-
-            if (user.name !== name) {
-                showFeedback("The username does not match the phone number provided.", 'error');
-                return;
-            }
-
-            sessionStorage.setItem('user_id', res.data.id);
-            sessionStorage.setItem('user_name', res.data.name); 
-            sessionStorage.setItem('is_admin', res.data.is_admin);
+            sessionStorage.setItem('auth_token', user.token);
+            sessionStorage.setItem('user_id', user.user_id);
+            sessionStorage.setItem('user_name', user.name);
+            sessionStorage.setItem('is_admin', user.is_admin);
             navigate('/dashboard');
 
         } catch (err) {
-            const msg = err.response?.data?.message || "Login failed. Please try again.";
+            const msg = err.response?.data?.error || err.response?.data?.message || "Login failed. Please try again.";
             showFeedback(msg, 'error');
         }
     };

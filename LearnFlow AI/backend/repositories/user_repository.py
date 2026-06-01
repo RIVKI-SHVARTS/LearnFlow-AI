@@ -31,7 +31,7 @@ def create_user(name: str, phone: str, is_admin: bool = False) -> Dict[str, Any]
         "_id": result.inserted_id,
         "name": name,
         "phone": phone,
-        "is_admin": False
+        "is_admin": is_admin
     })
 
 def update_user(user_id: str, name: str = None, phone: str = None) -> bool:
