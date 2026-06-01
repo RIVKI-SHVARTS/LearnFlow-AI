@@ -1,0 +1,51 @@
+/* LessonDisplay Component */
+
+.lesson-page {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lesson-page h1 {
+  margin-bottom: 2rem;
+  color: var(--primary);
+}
+
+.lesson-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  white-space: pre-wrap;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.lesson-page button {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lesson-page button:hover {
+  background-color: #0d1b5e;
+  box-shadow: var(--shadow);
+}
+
+.no-lesson {
+  padding: 2rem;
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.no-lesson p {
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+}

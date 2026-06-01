@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import FeedbackMessage from './FeedbackMessage';
+import '../styles/PromptInput.css';
 
 
 const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
     const [topic, setTopic] = useState('');
     const [response, setResponse] = useState('');
     const [loading, setLoading] = useState(false);
+    const [feedback, setFeedback] = useState({ message: '', type: '' });
     const navigate = useNavigate();
 
-
-
+    const showFeedback = (message, type) => {
+        setFeedback({ message, type });
+        setTimeout(() => {
+            setFeedback({ message: '', type: '' });
+        }, 3000);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +46,7 @@ const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
             navigate('/lesson')
         } catch (err) {
             console.error("Error generating lesson:", err.response?.data || err.message);
-            alert("Failed to generate lesson: " + (err.response?.data?.error || "Unknown error"));
+            showFeedback("Failed to generate lesson: " + (err.response?.data?.error || "Unknown error"), 'error');
         } finally {
             setLoading(false);
         }
@@ -47,7 +54,7 @@ const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
 
     return (
         <div className="prompt-input-container">
-            <form onSubmit={handleSubmit}>
+            <form className="prompt-form" onSubmit={handleSubmit}>
                 <textarea
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
@@ -58,6 +65,8 @@ const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
                     {loading ? 'Generating...' : 'Get Lesson'}
                 </button>
             </form>
+
+            <FeedbackMessage message={feedback.message} type={feedback.type} />
 
             {response && (
                 <div className="ai-response">
@@ -70,52 +79,3 @@ const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
 };
 
 export default PromptInput;
-
-
-// import React, { useState } from 'react';
-// import api from '../api/api';
-// import { useNavigate } from 'react-router-dom';
-
-// const PromptInput = ({ selectedCategoryId, selectedSubCategoryId }) => {
-//     const [topic, setTopic] = useState('');
-//     const [loading, setLoading] = useState(false);
-//     const navigate = useNavigate();
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-//         const userId = sessionStorage.getItem('user_id');
-//         setLoading(true);
-
-//         try {
-//             const res = await api.post('/prompts/generate', {
-//                 user_id: userId,
-//                 category_id: selectedCategoryId,
-//                 sub_category_id: selectedSubCategoryId,
-//                 topic: topic
-//             });
-
-//             // העברה לדף השיעור עם נתוני השיעור ב-state
-//             navigate('/lesson', { state: { lesson: res.data } });
-//         } catch (err) {
-//             alert("Failed to generate lesson: " + (err.response?.data?.error || "Unknown error"));
-//         } finally {
-//             setLoading(false);
-//         }
-//     };
-
-//     return (
-//         <form onSubmit={handleSubmit} className="prompt-form">
-//             <textarea
-//                 value={topic}
-//                 onChange={(e) => setTopic(e.target.value)}
-//                 placeholder="What would you like to learn about?"
-//                 required
-//             />
-//             <button type="submit" disabled={loading || !selectedCategoryId || !selectedSubCategoryId}>
-//                 {loading ? 'Generating...' : 'Get Lesson'}
-//             </button>
-//         </form>
-//     );
-// };
-
-// export default PromptInput;

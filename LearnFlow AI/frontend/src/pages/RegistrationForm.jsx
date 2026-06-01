@@ -4,6 +4,7 @@ import api from '../api/api';
 import { doSetUser } from '../store/Actions';
 import FeedbackMessage from '../components/FeedbackMessage';
 import { useNavigate, Link } from 'react-router-dom';
+import '../styles/RegistrationForm.css';
 
 
 const RegisterForm = () => {
@@ -24,12 +25,9 @@ const RegisterForm = () => {
             sessionStorage.setItem('user_name', response.data.name);
 
 
-
-            // Success
             setFeedback({ message: 'Registration successful! Welcome.', type: 'success' });
             setFormData({ name: '', phone: '' });
 
-            // Auto-clear success message after 3 seconds
             setTimeout(() => {
                 setFeedback({ message: '', type: '' });
             }, 3000);
@@ -38,21 +36,17 @@ const RegisterForm = () => {
 
 
         } catch (error) {
-            // Error
             let errorMessage = 'Registration failed. Please try again.';
 
             if (error.response) {
-                // השרת הגיב עם קוד שגיאה (כמו 409)
                 if (error.response.status === 409) {
                     errorMessage = 'This phone number is already registered.';
                 } else if (error.response.data && error.response.data.message) {
-                    // אם השרת שלח הודעה ספציפית ב-JSON
                     errorMessage = error.response.data.message;
                 }
             }
 
             setFeedback({ message: errorMessage, type: 'error' });
-            // Auto-clear error message after 3 seconds
             setTimeout(() => {
                 setFeedback({ message: '', type: '' });
             }, 3000);
@@ -82,7 +76,6 @@ const RegisterForm = () => {
                 <button type="submit">Register</button>
             </form>
 
-            {/* Feedback area */}
             <FeedbackMessage message={feedback.message} type={feedback.type} />
         </div>
     );

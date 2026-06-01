@@ -1,14 +1,24 @@
 
-
 import React, { useEffect, useState } from 'react';
 import api from '../api/api';
+import FeedbackMessage from '../components/FeedbackMessage';
+import '../styles/HistoryPage.css';
+import ReactMarkdown from 'react-markdown'; 
 
 
 const HistoryPage = () => {
     const [history, setHistory] = useState([]);
     const [expandedId, setExpandedId] = useState(null);
-    const [userName, setUserName] = useState(''); 
+    const [userName, setUserName] = useState('');
+    const [feedback, setFeedback] = useState({ message: '', type: '' });
+    const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+    const showFeedback = (message, type) => {
+        setFeedback({ message, type });
+        setTimeout(() => {
+            setFeedback({ message: '', type: '' });
+        }, 3000);
+    };
 
     useEffect(() => {
         const userId = sessionStorage.getItem('user_id');
@@ -20,49 +30,65 @@ const HistoryPage = () => {
             .then(res => {
                 setHistory(res.data);
             })
-            .catch(err => console.error("Error fetching history:", err));
+            .catch(err => {
+                console.error("Error fetching history:", err);
+                showFeedback("Error fetching history", 'error');
+            });
     }, []);
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this lesson?")) return;
-
         try {
-            // וודאי שהשרת באמת מוחק לפי ה-ID הזה
             await api.delete(`/prompts/${id}`);
-            // נעדכן את ה-State כך שהאייטם יוסר מהרשימה
             setHistory(prev => prev.filter(item => item.id !== id && item._id !== id));
+            setDeleteConfirm(null);
+            showFeedback('Lesson deleted successfully', 'success');
         } catch (err) {
             console.error("Delete error:", err);
-            alert("Failed to delete lesson. Check console.");
+            showFeedback("Failed to delete lesson", 'error');
         }
     };
 
     return (
-        <div className="history-page" style={{ padding: '20px' }}>
+        <div className="history-page">
             <h1>{userName} Learning History</h1>
             {history.length > 0 ? (
                 history.map((item) => {
-                    // הגדרה בטוחה ל-ID (לוקח _id אם קיים, אם לא אז id)
                     const itemId = item._id || item.id;
 
                     return (
-                        <div key={itemId} style={styles.card}>
-                            <div style={styles.header}>
+                        <div key={itemId} className="history-card">
+                            <div className="history-header">
                                 <h3>Topic: {item.prompt}</h3>
                                 <div>
                                     <button onClick={() => setExpandedId(expandedId === itemId ? null : itemId)}>
                                         {expandedId === itemId ? 'Close' : 'View Full'}
                                     </button>
-                                    <button onClick={() => handleDelete(itemId)} style={{ color: 'red', marginLeft: '10px' }}>
+                                    <button 
+                                        className="delete"
+                                        onClick={() => setDeleteConfirm(itemId)}
+                                    >
                                         Delete
                                     </button>
                                 </div>
                             </div>
 
-                            {/* פתיחה רק של הפריט שזוהה כ-expandedId */}
-                            {expandedId === itemId && (
-                                <div style={styles.content}>
-                                    <p>{item.response}</p>
+                            {deleteConfirm === itemId && (
+                                <div className="history-content">
+                                    <p>Are you sure you want to delete this lesson?</p>
+                                    <button onClick={() => handleDelete(itemId)} className="confirm-button">
+                                        Confirm Delete
+                                    </button>
+                                    <button className="cancel-button" onClick={() => setDeleteConfirm(null)}>
+                                        Cancel
+                                    </button>
+                                </div>
+                            )}
+
+                            {expandedId === itemId && deleteConfirm !== itemId && (
+                                <div className="history-content">
+                                    <ReactMarkdown>
+                                        {item.response}
+                                    </ReactMarkdown>
                                     <small>Date: {new Date(item.created_at).toLocaleDateString()}</small>
                                 </div>
                             )}
@@ -70,17 +96,13 @@ const HistoryPage = () => {
                     );
                 })
             ) : (
-                <p>No history found yet.</p>
+                <div className="no-history">
+                    <p>No history found yet.</p>
+                </div>
             )}
+            <FeedbackMessage message={feedback.message} type={feedback.type} />
         </div>
     );
-};
-
-
-const styles = {
-    card: { border: '1px solid #ddd', padding: '15px', margin: '10px 0', borderRadius: '8px' },
-    header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-    content: { marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #eee' }
 };
 
 export default HistoryPage;

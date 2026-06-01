@@ -1,8 +1,8 @@
 
-
 import React, { useState, useEffect } from 'react';
 import api from '../api/api';
 import PromptInput from "../components/PromptInput";
+import '../styles/CategorySelector.css';
 
 const CategorySelector = () => {
     const [categories, setCategories] = useState([]);
@@ -25,7 +25,7 @@ const CategorySelector = () => {
     };
 
     return (
-        <div className="category-page" style={{ padding: '20px' }}>
+        <div className="category-page">
             <h2>Step 1: Choose what to learn</h2>
             <select onChange={handleCategoryChange} value={selectedCategory}>
                 <option value="">Select Category</option>

@@ -1,40 +1,8 @@
-// import React from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
-
-// const Navbar = () => {
-//     const navigate = useNavigate();
-
-//     const handleLogout = () => {
-//         sessionStorage.clear(); 
-//         localStorage.clear();  
-        
-//         navigate('/');
-//     };
-
-//     return (
-//         <nav className="navbar" style={styles.nav}>
-//             <div className="logo">LearnFlow</div>
-//             <div className="nav-links">
-//                 <Link to="/dashboard" style={styles.link}>Dashboard</Link>
-//                 <Link to="/history" style={styles.link}>History</Link>
-//                 <button onClick={handleLogout} style={styles.button}>Logout</button>
-//             </div>
-//         </nav>
-//     );
-// };
-
-// const styles = {
-//     nav: { display: 'flex', justifyContent: 'space-between', padding: '1rem', background: '#f8f9fa', borderBottom: '1px solid #ddd' },
-//     link: { margin: '0 10px', textDecoration: 'none', color: '#333' },
-//     button: { cursor: 'pointer', background: 'none', border: 'none', color: 'red', fontWeight: 'bold' }
-// };
-
-// export default Navbar;
-
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import '../styles/Navbar.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -57,51 +25,28 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="navbar" style={styles.nav}>
-            <div className="logo" style={styles.logo}>LearnFlow</div>
+        <nav className="navbar">
+            <div className="logo">LearnFlow</div>
             
-            {/* הצגת ברכת שלום אישית אם המשתמש מחובר */}
             {userName && (
-                <div style={styles.greeting}>
+                <div className="greeting">
                     Hello, {userName}
                 </div>
             )}
 
             <div className="nav-links">
-                <Link to="/dashboard" style={styles.link}>Dashboard</Link>
-                <Link to="/history" style={styles.link}>History</Link>
+                <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                <Link to="/history" className="nav-link">History</Link>
 
                 {isAdmin && (
-                    <Link to="/admin" style={{...styles.link, fontWeight: 'bold'}}>
+                    <Link to="/admin" className="nav-link admin-link">
                         Admin Panel
                     </Link>
                 )}
-                <button onClick={handleLogout} style={styles.button}>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         </nav>
     );
-};
-
-const styles = {
-    nav: { 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', // יישור אנכי
-        padding: '1rem', 
-        background: '#f8f9fa', 
-        borderBottom: '1px solid #ddd' 
-    },
-    logo: { fontWeight: 'bold', fontSize: '1.2rem' },
-    greeting: { fontSize: '0.9rem', color: '#555', fontWeight: 'bold' },
-    link: { margin: '0 10px', textDecoration: 'none', color: '#333' },
-    button: { 
-        cursor: 'pointer', 
-        background: 'none', 
-        border: 'none', 
-        color: 'red', 
-        fontWeight: 'bold',
-        marginLeft: '10px'
-    }
 };
 
 export default Navbar;

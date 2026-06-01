@@ -1,0 +1,65 @@
+/* Navbar Component */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.navbar .logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.navbar .greeting {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--secondary);
+}
+
+.nav-links a.admin-link {
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.nav-links button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--error);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.nav-links button:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

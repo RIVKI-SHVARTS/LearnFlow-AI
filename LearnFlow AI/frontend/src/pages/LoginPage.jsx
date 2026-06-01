@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api/api';
 import FeedbackMessage from '../components/FeedbackMessage';
+import '../styles/LoginPage.css';
 
 const LoginPage = () => {
     const [name, setName] = useState('');
@@ -66,9 +66,9 @@ const LoginPage = () => {
 
             <FeedbackMessage message={feedback.message} type={feedback.type} />
             
-            <div className="register-link" style={{ marginTop: '15px' }}>
+            <div className="register-link">
                 <p>Don't have an account yet? 
-                    <Link to="/register" style={{ marginLeft: '5px', color: 'blue' }}>
+                    <Link to="/register">
                         Create a new account
                     </Link>
                 </p>

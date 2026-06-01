@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import './App.css';
+import './styles/Global.css';
+import './styles/App.css';
 import RegisterForm from './pages/RegistrationForm';
 import CategorySelector from './pages/CategorySelector';
 import LessonDisplay from './pages/LessonDisplay';

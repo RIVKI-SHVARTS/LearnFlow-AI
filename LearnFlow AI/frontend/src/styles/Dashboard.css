@@ -1,0 +1,44 @@
+/* Dashboard Component */
+
+.dashboard-container {
+  padding: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(26, 35, 126, 0.08) 0%, rgba(255, 255, 255, 1) 100%);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(26, 35, 126, 0.12);
+}
+
+.dashboard-container h1 {
+  margin-bottom: 2rem;
+  color: #0d2140;
+  font-size: 2.1rem;
+  letter-spacing: 0.02em;
+}
+
+.main-layout {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.left-column {
+  flex: 1;
+  background-color: rgba(0, 184, 212, 0.08);
+  border: 1px solid rgba(0, 184, 212, 0.18);
+  border-radius: 20px;
+  padding: 1.8rem;
+}
+
+.right-column {
+  flex: 2;
+  background-color: rgba(26, 35, 126, 0.05);
+  border: 1px solid rgba(26, 35, 126, 0.12);
+  border-radius: 20px;
+  padding: 1.8rem;
+}
+
+.history-section {
+  border-top: 2px solid rgba(26, 35, 126, 0.12);
+  padding-top: 2rem;
+}
